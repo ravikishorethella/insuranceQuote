@@ -29,6 +29,12 @@ function eventListeners() {
       // using the global html variable
       html.displayError("All the fields are mandatory");
     } else {
+      // clearing the previous results
+      const prevResult = document.querySelector("#result div");
+      if (prevResult !== null) {
+        prevResult.remove();
+      }
+
       //     make the quotation here
       const insurance = new Insurance(make, year, level);
       const price = insurance.calculateQuotation(insurance);
@@ -169,5 +175,14 @@ HTMLUI.prototype.showResults = function(price, insurance) {
       <p>Level: ${insurance.level}</p>
       <p class="total"> Total: $ ${price}</p>
   `;
-  result.appendChild(div);
+
+  //   adding the spinne
+  const spinner = document.querySelector("#loading img");
+  spinner.style.display = "block";
+
+  // timeout for the spinner
+  setTimeout(() => {
+    spinner.style.display = "none";
+    result.appendChild(div);
+  }, 3000);
 };

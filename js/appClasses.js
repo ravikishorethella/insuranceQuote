@@ -1,43 +1,47 @@
-// // Variables
-// const form = document.getElementById('request-quote');
-// const html = new HTMLUI();
+// variables
+const form = document.getElementById("request-quote");
+const html = new HTMLUI();
 
-// // Event Listeners
-// eventListeners();
+// eventListeners
 
-// function eventListeners() {
-//      document.addEventListener('DOMContentLoaded', function() {
-//           // Create the <option> for the years
+eventListeners();
 
-//           html.displayYears();
-//      });
+function eventListeners() {
+  // on page load
+  document.addEventListener("DOMContentLoaded", () => {
+    html.displayYears();
+  });
 
-//      // When the form is submitted
-//      form.addEventListener('submit', function(e) {
-//           e.preventDefault();
+  //   when the form is submitted
+  form.addEventListener("submit", function(e) {
+    //   prevent the page from loading
+    e.preventDefault();
 
-//           // Read the values from the FORM
-//           const make = document.getElementById('make').value;
-//           const year = document.getElementById('year').value;
-//           // Read the radio buttons
-//           const level = document.querySelector('input[name="level"]:checked').value;
+    //   reading the values from the form
+    const make = document.getElementById("make").value;
+    const year = document.getElementById("year").value;
 
-//           // Check that all the fields have something
-//           if( make === '' || year === '' || level === '' ) {
-//                html.displayError('All the fields are mandatory');
-//           } else {
-//                // Clear the previous quotes
+    // check if the radio button is checked
+    const level = document.querySelector('input[name="level"]:checked').value;
 
-//                const prevResult = document.querySelector('#result div');
-//                if(prevResult != null) {
-//                     prevResult.remove();
-//                }
-//                // Make the quotation
-//                const insurance = new Insurance(make,year, level );
-//                const price = insurance.calculateQuotation(insurance);
+    //     if any of the form field is empty then return an error
+    if (make === "" || year === "" || level === "") {
+      // using the global html variable
+      html.displayError("All the fields are mandatory");
+    } else {
+      // clearing the previous results
+      const prevResult = document.querySelector("#result div");
+      if (prevResult !== null) {
+        prevResult.remove();
+      }
 
-//                // Print the result from HTMLUI();
-//                html.showResults(price, insurance);
-//           }
-//      });
-// }
+      //     make the quotation here
+      const insurance = new Insurance(make, year, level);
+      const price = insurance.calculateQuotation(insurance);
+
+      // printing the result from HTMLUI
+      html.showResults(price, insurance);
+      // console.log(price);
+    }
+  });
+}
